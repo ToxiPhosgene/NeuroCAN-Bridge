@@ -3,6 +3,7 @@
 #include <mcp2515.h>
 
 #define CAN_bitrate CAN_125KBPS
+#define CAN_ID 0x001
 
 // Настройки Wi-Fi
 const char* ssid = "pentagon";
@@ -38,7 +39,7 @@ void setup() {
 void loop() {
   // Чтение CAN-сообщения (с проверкой)
   if (mcp2515.readMessage(&canRxMsg) == MCP2515::ERROR_OK) {
-    if (canRxMsg.can_id == 0x001) {
+    if (canRxMsg.can_id == CAN_ID) {
       int sensorValue = (canRxMsg.data[0] << 8) | canRxMsg.data[1];
       Serial.print("CAN данные: ");
       Serial.println(sensorValue);
